@@ -14,18 +14,20 @@ use rocket::response::Redirect;
 // }
 #[derive(Serialize)]
 struct Context {
-	food: String,
+	name: String,
+	foods: Vec<String>,
 }
 
 #[get("/")]
 fn index() -> Redirect {
-	Redirect::to("/BAGEL")
+	Redirect::to("/Jebidiah/eat")
 }
 
-#[get("/eat/<food>")]
-fn eat(food: String) -> Template {
+#[get("/<name>/eat")]
+fn eat(name: String) -> Template {
 	let context = Context{
-		food: food
+		name: name,
+		foods: vec!["Bagel", "Beef", "Banana"].iter().map(|s| s.to_string()).collect()
 	};
 
 	Template::render("index",&context)
